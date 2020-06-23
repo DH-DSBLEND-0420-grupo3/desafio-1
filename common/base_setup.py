@@ -19,9 +19,9 @@ def popen(cmd):
         raise
 
 def draw_text_icon(image_path, html_text):
-    items_layout = Layout( width='auto')     # override the default width of the button to 'auto' to let the button grow
-
-    box_layout = Layout(display='flex',
+    # override the default width of the button to 'auto' to let the button grow
+    #items_layout = Layout(width='auto')
+    box_layout   = Layout(display='flex',
                     flex_flow='row',
                     align_items='stretch',
                     border='none',
@@ -29,17 +29,11 @@ def draw_text_icon(image_path, html_text):
 
     with open(image_path, "rb") as file:
         image = file.read()
-    image_obj = Image(
-        value=image,
-        format='png'
-    )
-
-    html_obj = HTML(
-        value=html_text
-    )
+    image_obj = Image(value=image, format='png')
+    html_obj  = HTML(value=html_text)
 
     items = [image_obj, html_obj]
-    box = Box(children=items, layout=box_layout)
+    box   = Box(children=items, layout=box_layout)
     return box
 
 
@@ -76,8 +70,7 @@ def install_packages(requirements_file_path):
     required_packages = list_required_packages(requirements_file_path)
     for p in required_packages:
         package_name = p.strip()
-        if package_name not in installed:            
-            #print(package_name  + ' not installed')
+        if package_name not in installed:
             print(popen('conda install --yes ' + package_name))
         else:
             print(package_name + ' already installed' )
@@ -87,8 +80,7 @@ def main():
     requirements_file_path = './common/requirements.txt'
     try:
         install_packages(requirements_file_path)
-    except subprocess.CalledProcessError as err:
+    except subprocess.CalledProcessError as _:
         pass
 
 main()
-
